@@ -1,0 +1,5 @@
+status_id,status_text
+1,SHUTDOWN
+2,WARMUP
+3,HEATLOAD
+4,MAKELOAD

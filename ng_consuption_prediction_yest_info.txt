@@ -1,0 +1,8 @@
+ontem_nao_teve_troca=False
+ontem_Total_consumoDiario_m3_rounded=60984
+ontem_Total_consumo_dia_comgas_rounded=63424
+ontem_ng_yest_consumed_value=61110.4
+poder_calorifico=1.04
+poder_calorifico_backup=1.04
+input_manual=False
+acertou_ontem=False

@@ -1,0 +1,4 @@
+﻿WD,Date,Date_Validação,Locationdesc,Resource Description,Material,Workorder Number,Quantity,JDE Comment,Aspen Comment," REPLACE( CONCAT( LEFT(Time, 2), 'h'), ':', '')", CAST (Workorder Number AS INTEGER )
+Thu,2025-02-27 00:00:00,1,Maua,MA - UNIT  2,SSO_______SILOMA__,5872235,960000,,,4h,5872235
+Wed,2025-02-26 00:00:00,1,Maua,MA - UNIT  2,BP280_____SILOMA__,5871812,100000,,,0h,5871812
+Wed,2025-02-26 00:00:00,1,Maua,MA - UNIT  3,V7H_______SILOMA__,5870947,426343,,,0h,5870947

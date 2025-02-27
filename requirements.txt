@@ -1,0 +1,6 @@
+tagreader
+pandas
+selenium
+pywin32
+Office365-REST-Python-Client
+cryptography
