@@ -7,6 +7,7 @@ import time
 import sys
 from office365.runtime.auth.authentication_context import AuthenticationContext
 from office365.sharepoint.client_context import ClientContext
+from office365.sharepoint.files.file import File
 from cryptography.fernet import Fernet
 import requests
 import json
@@ -52,6 +53,30 @@ def converter_para_datetime(data_str):
     
     # Retorna o objeto datetime
     return datetime.datetime.strptime(data_com_ano, '%d-%b-%Y')
+
+def save_value_to_file(value):
+    directory = "value"
+    filename = "day-value.txt"
+    filepath = os.path.join(directory, filename)
+    
+    try:
+        # Garantir que o diretório exista
+        os.makedirs(directory, exist_ok=True)
+        
+        # Escrever o valor no arquivo com segurança
+        with open(filepath, "w", encoding="utf-8") as file:
+            file.write(str(value))
+        
+        # Verificar se o valor foi salvo corretamente
+        with open(filepath, "r", encoding="utf-8") as file:
+            saved_value = file.read().strip()
+            if saved_value != str(value):
+                raise ValueError("Erro ao salvar o valor no arquivo.")
+        
+        print(f"Valor '{value}' salvo com sucesso em '{filepath}' \n")
+    
+    except Exception as e:
+        print(f"Erro ao salvar o valor: {e}")
 
 # Cores de texto ANSI
 # The above Python code defines escape sequences for text color and formatting in the terminal. Each
@@ -863,6 +888,11 @@ if __name__ == "__main__":
         
         criar_log("Previsão de consumo para o dia: ")
         criar_log(f'{Total_consumo_dia_comgas_rounded}\n')
+        # The above code is calling a function `save_value_to_file` and passing the variable
+        # `Total_consumo_dia_comgas_rounded` as an argument to the function. The purpose of this
+        # function is to save the value of `Total_consumo_dia_comgas_rounded` to a file.
+        save_value_to_file(Total_consumo_dia_comgas_rounded)
+        
         
         # Cálculo para conferir se o valor não está muito discrepante
         # The above Python code snippet is checking if there was no exchange yesterday and if the
@@ -887,6 +917,10 @@ if __name__ == "__main__":
         # Inserimos um ponto na terceira casa decimal da direita para a esquerda
         posicao_inserir_ponto = len(valor_com_ponto_str) - 3
         valor_com_ponto_str = valor_com_ponto_str[:posicao_inserir_ponto] + '.' + valor_com_ponto_str[posicao_inserir_ponto:]
+        
+        # The code is calling a function `save_value_to_file` and passing the variable
+        # `Total_consumo_dia_comgas_rounded` as an argument to the function. The purpose of this
+        # function is to save the value of `Total_consumo_dia_comgas_rounded` to a file.
             
         # The above Python code is opening a file in write mode and writing several variables and
         # their values to the file. The variables and values being written include information related
@@ -973,17 +1007,23 @@ if __name__ == "__main__":
         'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0',
         'x-msg-timestamp': '1736944269675'
         }
-# The above Python code is making a POST request to a specified URL using the `requests` library. It
-# includes headers and payload data in the request.
-
-        response = requests.request("POST", url, headers=headers, data=payload)
-
-        print(response.text)
-        print("Valor inseridos com sucesso.")
-        print("Valor inseridos com sucesso.")
-        print("Valor inseridos com sucesso.")
+        # The above Python code is making a POST request to a specified URL using the `requests` library. It
+        # includes headers and payload data in the request.
         
-        time.sleep(10) 
+        # Obtendo a hora atual
+        agora = datetime.datetime.now()
+        # Definindo a hora limite (10h da manhã)
+        hora_limite = datetime.time(10, 0)  # 10:00 AM
+        # Verificando se a hora atual está dentro do limite
+        if agora.time() < hora_limite:
+            print("Executando a linha de código antes das 10h da manhã.")
+            response = requests.request("POST", url, headers=headers, data=payload)
+            print(response.text)
+            criar_log("Valor inseridos com sucesso.")
+            print("Valor inseridos com sucesso.")
+            print("Valor inseridos com sucesso.")
+        else:
+            criar_log("Já passou das 10h, não foram inseridos os valores no site.")
         
         # ====================================================================================================================================================================================
         
@@ -1027,3 +1067,4 @@ if __name__ == "__main__":
 
     criar_log("Prestes e encerrar o código...")
     sys.exit("Encerrando o código!")
+
